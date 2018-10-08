@@ -1,0 +1,14 @@
+Package: peakSeason
+Type: Package
+Title: Functions for faster ChIP/ATAC-seq analysis and visualization.
+Version: 0.1.0
+Author: Anand Mayakonda
+Maintainer: Anand Mayakonda <anandmt3@gmail.com>
+Description: Summarizes bigWig files efficiently using bwtool and also provides functions for plotting.
+License: MIT
+Encoding: UTF-8
+LazyData: TRUE
+Depends: R (>= 3.3)
+Imports: data.table
+NeedsCompilation: no
+RoxygenNote: 6.1.0
