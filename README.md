@@ -33,7 +33,7 @@ Once you have the above information, usage is simple. A flow chart as below (for
 
 ### Installation
 ```r
-install_github(repo = "PoisonAlien/peakSeason")
+devtools::install_github(repo = "PoisonAlien/peakSeason")
 ```
 
 ## To Do
@@ -47,8 +47,8 @@ install_github(repo = "PoisonAlien/peakSeason")
 
 ### Visualization
 
-- [x] Profile plot
-- [x] Heatmap
+- [x] Profile plot (`plot_profile`)
+- [x] Heatmap (`plot_heatmap`)
 - [x] Homer annotation pie charts
 - [ ] Track plots
 - [ ] Waterfall plots
