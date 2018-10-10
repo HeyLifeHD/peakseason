@@ -54,8 +54,14 @@ extend_bed = function(bed, op_dir, startFrom = "tes", up = 2500, down = 2500){
   if(is.data.frame(bed)){
     data.table::setDT(x = bed)
   }else if(as.logical(length(grep(pattern = '\\.gz$', x = bed, fixed = FALSE)))){
+    if(!file.exists(bed)){
+      stop(paste0(bed, " does not exists"))
+    }
     bed = data.table::fread(cmd = paste0("zcat < ", bed), sep = "\t", header = FALSE)
   }else{
+    if(!file.exists(bed)){
+      stop(paste0(bed, " does not exists"))
+    }
     bed = data.table::fread(input = bed, sep = "\t", header = FALSE)
   }
 

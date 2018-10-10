@@ -46,7 +46,7 @@ extract_summary = function(coldata = NULL, bed = NULL, genome = NULL, startFrom 
     if(is.null(startFrom)){
       bedSimple = make_bed(bed = bed, op_dir = op_dir)
     }else{
-      bedSimple = extend_bed(bed = bed, op_dir = op_dir, startFrom = startFrom, up = 2500, down = 2500)
+      bedSimple = extend_bed(bed = bed, op_dir = op_dir, startFrom = startFrom, up = up, down = down)
     }
   }
 
