@@ -14,13 +14,13 @@
 #' @param bw_path path to bwtool. Default looks under system path.
 #' @param bedHeader Does input BED file has header. Default FALSE
 #' @param nthreads Threads to use. Default 4.
-#' @param remove_dups Remove duplicated BED entries. Default TRUE, removes duplicated BED entries with same start and end coordinates.
+#' @param remove_dups Remove duplicated BED entries with same start and end coordinates. Default FALSE.
 #'
 #' @export
 #'
 extract_summary = function(coldata = NULL, bed = NULL, genome = NULL, startFrom = NULL, up = 2500, down = 2500, op_dir = "./",
                            rmAfter = TRUE, keepBed = TRUE, bwt_path = NULL,
-                           bedHeader = FALSE, nthreads = 4, remove_dups = TRUE){
+                           bedHeader = FALSE, nthreads = 4, remove_dups = FALSE){
 
   check_bwtools(path = bwt_path, warn = FALSE)
   up = as.numeric(up)
@@ -84,6 +84,8 @@ extract_summary = function(coldata = NULL, bed = NULL, genome = NULL, startFrom 
       x
     })
 
+
+
   names(summary_list) = gsub(pattern = "*\\.summary$", replacement = "", x = basename(path = unlist(summaries)))
   #return(summary_list)
 
@@ -114,15 +116,21 @@ extract_summary = function(coldata = NULL, bed = NULL, genome = NULL, startFrom 
   if(remove_dups){
     sum_tbl = data.table::rbindlist(l = summary_list, idcol = "sample", use.names = TRUE, fill = TRUE)
     sum_tbl = data.table::dcast(data = sum_tbl, formula =  id ~ sample, value.var = "sum")
+    #return(sum_tbl)
+    keepBed = FALSE #FIX this later!!
     if(keepBed){
       sum_tbl[,chromosome := NULL][,start := NULL][, end := NULL]
       b[, id :=paste0(chrom, ":", start, "-", end)]
-      b = b[!duplicated(id)]
+      b = b[!duplicated(id)][order(id)]
+      print(head(b))
+      print(head(sum_tbl[order(id)]))
       sum_tbl = merge(b, sum_tbl, by = "id")
     }
+
   }else{
     sum_tbl = data.table::as.data.table(lapply(summary_list, function(x) x[,sum]))
     sum_tbl = cbind(summary_list[[1]][,.(chromosome, start, end, size, id)], sum_tbl)
+    keepBed = FALSE #FIX this later!!
     if(keepBed){
       sum_tbl[,chromosome := NULL][,start := NULL][, end := NULL]
       sum_tbl = cbind(b, sum_tbl)

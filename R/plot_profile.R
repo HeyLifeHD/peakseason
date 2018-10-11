@@ -13,10 +13,11 @@
 #' @param axis_font_size font size for axis. Default 1.
 #' @param sample_names names for samples. Default NULL parses from bigwig files.
 #' @param auto_y_axis Default TRUE. If FALSE plots from zero to max.
+#' @param y_lims Default NULL. Manually specify Y-limits.
 #' @export
 plot_profile = function(mat_list, summarizeBy = 'mean', color = NULL, ci = FALSE,
                         legend_font_size = 1, condition = NULL, collapse_reps = TRUE, line_size = 2, axis_lwd = 3, axis_font_size = 1,
-                        sample_names = NULL, auto_y_axis = TRUE){
+                        sample_names = NULL, auto_y_axis = TRUE, y_lims = NULL){
 
   coldata = mat_list$cdata
 
@@ -89,6 +90,16 @@ plot_profile = function(mat_list, summarizeBy = 'mean', color = NULL, ci = FALSE
   if(auto_y_axis){
     yl[1] = round(min(yl) - (min(yl)*0.10), digits = 2)
     yl[length(yl)] = round(max(yl) + (max(yl)*0.10), digits = 2)
+  }
+
+  if(!is.null(y_lims)){
+    if(length(y_lims) < 2){
+      warning("y_lim requires lower and upper limits. Auto adjusting y axis limits")
+      yl[1] = round(min(yl) - (min(yl)*0.10), digits = 2)
+      yl[length(yl)] = round(max(yl) + (max(yl)*0.10), digits = 2)
+    }else{
+      yl = sort(as.numeric(as.character(y_lims)))[1:2]
+    }
   }
 
   xlabs = c(sapply(strsplit(x = as.character(size), split = ":", fixed = TRUE), "[[", 1), 0,

@@ -7,7 +7,7 @@
 extract_summary(coldata = NULL, bed = NULL, genome = NULL,
   startFrom = NULL, up = 2500, down = 2500, op_dir = "./",
   rmAfter = TRUE, keepBed = TRUE, bwt_path = NULL,
-  bedHeader = FALSE, nthreads = 4, remove_dups = TRUE)
+  bedHeader = FALSE, nthreads = 4, remove_dups = FALSE)
 }
 \arguments{
 \item{coldata}{Coldata generated from \code{\link{read_coldata}}}
@@ -32,7 +32,7 @@ extract_summary(coldata = NULL, bed = NULL, genome = NULL,
 
 \item{nthreads}{Threads to use. Default 4.}
 
-\item{remove_dups}{Remove duplicated BED entries. Default TRUE, removes duplicated BED entries with same start and end coordinates.}
+\item{remove_dups}{Remove duplicated BED entries with same start and end coordinates. Default FALSE.}
 
 \item{bw_path}{path to bwtool. Default looks under system path.}
 }
