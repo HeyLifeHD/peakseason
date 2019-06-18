@@ -161,7 +161,7 @@ plot_profile = function(mat_list, summarizeBy = 'mean', color = NULL, ci = FALSE
   axis(side = 1, at = xticks,
        labels = c(paste0("-", xlabs[1]), xlabs[2], xlabs[3]), lty = 1, lwd = axis_lwd,
        font = 2, cex.axis = axis_font_size, line = 0.5)
-  axis(side = 2, at = yl, labels = yl, lty = 1, lwd = axis_lwd, las = 2, font = 2, cex = axis_font_size)
+  axis(side = 2, at = pretty(yl), labels = pretty(yl), lty = 1, lwd = axis_lwd, las = 2, font = 2, cex = axis_font_size)
 
   if(is.null(condition)){
     add_legend(x = "topright", bty = "n", legend = names(color),
